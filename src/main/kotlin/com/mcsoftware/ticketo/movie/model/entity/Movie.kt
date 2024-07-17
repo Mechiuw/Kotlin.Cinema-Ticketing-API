@@ -2,6 +2,7 @@ package com.mcsoftware.ticketo.movie.model.entity
 
 import com.fasterxml.jackson.annotation.JsonBackReference
 import jakarta.persistence.*
+import org.jetbrains.annotations.NotNull
 import java.util.*
 
 @Entity
@@ -28,5 +29,5 @@ data class Movie(
     @ManyToOne
     @JsonBackReference
     @JoinColumn(name = "rating_id_list", nullable = false, referencedColumnName = "id")
-    val ratingId:List<UUID>
+    val ratingId:UUID //ganti ke rating id
 )
