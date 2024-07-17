@@ -84,6 +84,19 @@ class TheaterServiceImpl(
     }
 
     override fun allTheater(): List<Theater> {
-        TODO("Not yet implemented")
+        try{
+            val theaters: List<Theater> = repo.findAll();
+            if(theaters.isNotEmpty()){
+                return theaters
+            } else {
+                throw NotFoundException()
+            }
+        } catch (e: IllegalArgumentException) {
+            throw IllegalArgumentException("Invalid input: ${e.message}")
+        } catch (e: DataAccessException) {
+            throw IllegalAccessException("Database error: ${e.message}")
+        } catch (e: Exception) {
+            throw RuntimeException("Unexpected error: ${e.message}")
+        }
     }
 }
