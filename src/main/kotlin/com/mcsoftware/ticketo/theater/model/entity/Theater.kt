@@ -13,7 +13,7 @@ data class Theater(
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "theater_id", updatable = false, nullable = false)
-    val id:UUID,
+    val id:UUID = UUID.randomUUID(),
 
     @Column(name = "theater_number", nullable = false)
     var theaterNumber:String,
