@@ -22,5 +22,5 @@ data class Customer(
     var email:String,
 
     @Column(name = "address", nullable = false)
-    val address:String,
+    var address:String,
 )

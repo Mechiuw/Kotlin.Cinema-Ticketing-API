@@ -33,8 +33,18 @@ class CustomerServiceImpl (private val repo: CustomerRepository):CustomerService
         try{
             val fetchCustomer = repo.findById(id)
             if(fetchCustomer.isPresent){
-               var updatedCustomer = fetchCustomer.get()
-                updatedCustomer.name = request.name
+               fetchCustomer.get().name = request.name
+                fetchCustomer.get().birthDate = request.birthDate
+                fetchCustomer.get().email = request.email
+                fetchCustomer.get().address = request.address
+                val updatedCustomer = repo.saveAndFlush(fetchCustomer.get())
+                return CustomerResponse(
+                    updatedCustomer.id,
+                    updatedCustomer.name,
+                    updatedCustomer.birthDate,
+                    updatedCustomer.email,
+                    updatedCustomer.address
+                )
             }
         } catch (e:Exception){
 
