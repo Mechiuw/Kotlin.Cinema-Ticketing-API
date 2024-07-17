@@ -6,12 +6,18 @@ import com.mcsoftware.ticketo.customer.model.entity.Customer
 import com.mcsoftware.ticketo.customer.repository.CustomerRepository
 import com.mcsoftware.ticketo.customer.service.interfaces.CustomerService
 import com.mcsoftware.ticketo.customer.util.CustomerConverter
+import com.mcsoftware.ticketo.customer.util.CustomerUpdater
+import jakarta.transaction.Transactional
 import org.springframework.dao.DataAccessException
-import java.util.*
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException
+import org.springframework.stereotype.Service
 
+@Service
+@Transactional(rollbackOn = [Exception::class])
 class CustomerServiceImpl (
     private val repo: CustomerRepository,
-    private val convert : CustomerConverter
+    private val convert : CustomerConverter,
+    private val updater : CustomerUpdater
 ):CustomerService {
     override fun createCustomer(request: CustomerRequest): CustomerResponse {
         try {
@@ -31,22 +37,13 @@ class CustomerServiceImpl (
         try{
             val fetchCustomer = repo.findById(id)
             if(fetchCustomer.isPresent){
-               fetchCustomer.get().name = request.name
-                fetchCustomer.get().birthDate = request.birthDate
-                fetchCustomer.get().email = request.email
-                fetchCustomer.get().address = request.address
-                val updatedCustomer = repo.saveAndFlush(fetchCustomer.get())
-                return CustomerResponse(
-                    updatedCustomer.id,
-                    updatedCustomer.name,
-                    updatedCustomer.birthDate,
-                    updatedCustomer.email,
-                    updatedCustomer.address
-                )
+                val updatedCustomer = repo.saveAndFlush(
+                    updater.customerUpdater(fetchCustomer.get(),request))
+                return convert.convertToResponse(updatedCustomer)
+            } else {
+                throw NotFoundException()
             }
-        } catch (e:Exception){
-
-        } catch (e: IllegalArgumentException) {
+        }  catch (e: IllegalArgumentException) {
             throw IllegalArgumentException("Invalid input: ${e.message}")
         } catch (e: DataAccessException) {
             throw IllegalAccessException("Database error: ${e.message}")
