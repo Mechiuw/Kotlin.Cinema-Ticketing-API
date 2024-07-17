@@ -11,6 +11,7 @@ import jakarta.transaction.Transactional
 import org.springframework.dao.DataAccessException
 import org.springframework.stereotype.Service
 import java.util.*
+import kotlin.NoSuchElementException
 
 @Service
 @Transactional(rollbackOn = [Exception::class])
@@ -49,14 +50,53 @@ class RatingServiceImpl(
     }
 
     override fun deleteRating(id:UUID) {
-        TODO("Not yet implemented")
+        try{
+            val fetchRating = repo.findById(id)
+            if(fetchRating.isPresent){
+                repo.delete(fetchRating.get())
+            } else {
+                throw NoSuchElementException()
+            }
+        } catch (e: IllegalArgumentException) {
+            throw IllegalArgumentException("Invalid input: ${e.message}")
+        } catch (e: DataAccessException) {
+            throw IllegalAccessException("Database error: ${e.message}")
+        } catch (e: Exception) {
+            throw RuntimeException("Unexpected error: ${e.message}")
+        }
     }
 
     override fun getRating(id: UUID): RatingResponse {
-        TODO("Not yet implemented")
+        try{
+            val fetchRating = repo.findById(id)
+            if(fetchRating.isPresent){
+                return convert.convertToResponse(fetchRating.get())
+            } else {
+                throw NoSuchElementException()
+            }
+        } catch (e: IllegalArgumentException) {
+            throw IllegalArgumentException("Invalid input: ${e.message}")
+        } catch (e: DataAccessException) {
+            throw IllegalAccessException("Database error: ${e.message}")
+        } catch (e: Exception) {
+            throw RuntimeException("Unexpected error: ${e.message}")
+        }
     }
 
     override fun allRating(): List<Rating> {
-        TODO("Not yet implemented")
+        try{
+            val ratings = repo.findAll()
+            if(ratings.isNotEmpty()){
+                return ratings
+            } else {
+                throw NoSuchElementException()
+            }
+        } catch (e: IllegalArgumentException) {
+            throw IllegalArgumentException("Invalid input: ${e.message}")
+        } catch (e: DataAccessException) {
+            throw IllegalAccessException("Database error: ${e.message}")
+        } catch (e: Exception) {
+            throw RuntimeException("Unexpected error: ${e.message}")
+        }
     }
 }
