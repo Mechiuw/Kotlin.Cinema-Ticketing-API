@@ -10,7 +10,7 @@ data class Customer(
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "customer_id", updatable = false, nullable = false)
-    var id: UUID = UUID.randomUUID(),
+    val id: UUID = UUID.randomUUID(),
 
     @Column(name = "name", nullable = false)
     var name:String,

@@ -1,10 +1,11 @@
 package com.mcsoftware.ticketo.movie.model.dto.response
 
-import lombok.Builder
+import lombok.Data
 import java.util.*
 
+@Data
 data class MovieResponse(
-    val id : String,
+    val id : UUID,
     val title : String,
     val duration : Int,
     val showDate : Date,

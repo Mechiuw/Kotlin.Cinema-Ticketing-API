@@ -10,24 +10,24 @@ import java.util.*
 data class Movie(
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "movie_id", columnDefinition = "uuid", updatable = false, nullable = false)
-    val id: String,
+    val id: UUID,
 
     @Column(name = "movie_title", nullable = false)
-    val title: String,
+    var title: String,
 
     @Column(name = "movie_duration", nullable = false)
-    val duration: Int,
+    var duration: Int,
 
     @Column(name = "show_date", nullable = false)
-    val showDate: Date,
+    var showDate: Date,
 
     @Column(name = "price", nullable = false)
-    val price: Int,
+    var price: Int,
 
     @ManyToOne
     @JsonBackReference
     @JoinColumn(name = "rating_id_list", nullable = false, referencedColumnName = "id")
-    val ratingId:String //ganti ke rating id
+    var ratingId:String //ganti ke rating id
 )
