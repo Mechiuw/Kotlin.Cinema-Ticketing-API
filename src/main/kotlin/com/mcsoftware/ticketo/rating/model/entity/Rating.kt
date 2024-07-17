@@ -26,7 +26,7 @@ data class Rating(
     @OneToMany(mappedBy = "id", cascade = [CascadeType.ALL])
     @JsonManagedReference
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    val moviesLinked : List<Movie>
+    var moviesLinked : List<Movie>
 ) {
     constructor(code: ECode,description: String):this(
         id = UUID.randomUUID(),
