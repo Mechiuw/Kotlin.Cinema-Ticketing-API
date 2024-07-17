@@ -27,4 +27,11 @@ data class Rating(
     @JsonManagedReference
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     val moviesLinked : List<Movie>
-)
+) {
+    constructor(code: ECode,description: String):this(
+        id = UUID.randomUUID(),
+        code = code,
+        description = description,
+        moviesLinked = emptyList()
+    )
+}

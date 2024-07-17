@@ -1,5 +1,6 @@
 package com.mcsoftware.ticketo.rating.model.dto.response
 
+import com.mcsoftware.ticketo.movie.model.entity.Movie
 import com.mcsoftware.ticketo.rating.constant.ECode
 import lombok.Data
 import java.util.UUID
@@ -8,5 +9,6 @@ import java.util.UUID
 data class RatingResponse(
     val id: UUID,
     val code: ECode,
-    val description: String
+    val description: String,
+    val moviesLinked : List<Movie>
 )

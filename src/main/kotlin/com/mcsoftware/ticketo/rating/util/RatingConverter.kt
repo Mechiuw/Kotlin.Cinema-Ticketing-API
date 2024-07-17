@@ -1,6 +1,7 @@
 package com.mcsoftware.ticketo.rating.util
 
 import com.mcsoftware.ticketo.rating.model.dto.request.RatingRequest
+import com.mcsoftware.ticketo.rating.model.dto.response.RatingResponse
 import com.mcsoftware.ticketo.rating.model.entity.Rating
 import org.springframework.stereotype.Component
 import java.util.*
@@ -9,15 +10,13 @@ import java.util.*
 class RatingConverter {
     fun convertToRating(request : RatingRequest): Rating{
         try{
-            if(request.moviesLinked.isEmpty())
-            return Rating(
-                UUID.randomUUID(),
-                request.code,
-                request.description,
-                Collections.emptyList()
-            )
+            return if(request.moviesLinked.isEmpty())
+                Rating(
+                    request.code,
+                    request.description,
+                )
             else {
-                return Rating(
+                Rating(
                     UUID.randomUUID(),
                     request.code,
                     request.description,
@@ -25,6 +24,19 @@ class RatingConverter {
                 )
             }
         } catch (e:Exception){
+            throw RuntimeException(e.message)
+        }
+    }
+
+    fun convertToResponse(entity : Rating): RatingResponse{
+        try{
+            return RatingResponse(
+                entity.id,
+                entity.code,
+                entity.description,
+                entity.moviesLinked
+            )
+        }catch (e:Exception){
             throw RuntimeException(e.message)
         }
     }

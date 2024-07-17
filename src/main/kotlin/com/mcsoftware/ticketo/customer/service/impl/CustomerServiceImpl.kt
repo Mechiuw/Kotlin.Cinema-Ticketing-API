@@ -34,7 +34,7 @@ class CustomerServiceImpl (
         }
     }
 
-    override fun updateCustomer(id: String, request: CustomerRequest): CustomerResponse {
+    override fun updateCustomer(id: UUID, request: CustomerRequest): CustomerResponse {
         try{
             val fetchCustomer = repo.findById(id)
             if(fetchCustomer.isPresent){
@@ -53,7 +53,7 @@ class CustomerServiceImpl (
         }
     }
 
-    override fun deleteCustomer(id: String) {
+    override fun deleteCustomer(id: UUID) {
         try{
             val presentCustomer = repo.findById(id).orElseThrow()
             if(presentCustomer != null){
@@ -70,7 +70,7 @@ class CustomerServiceImpl (
         }
     }
 
-    override fun getCustomer(id: String): CustomerResponse {
+    override fun getCustomer(id: UUID): CustomerResponse {
         try{
             val fetchCustomer : Optional<Customer> = repo.findById(id)
             if(fetchCustomer.isPresent){
