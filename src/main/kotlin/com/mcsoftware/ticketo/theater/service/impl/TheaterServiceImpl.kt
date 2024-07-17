@@ -6,13 +6,19 @@ import com.mcsoftware.ticketo.theater.model.entity.Theater
 import com.mcsoftware.ticketo.theater.repository.TheaterRepository
 import com.mcsoftware.ticketo.theater.service.TheaterService
 import com.mcsoftware.ticketo.theater.util.TheaterConverter
+import com.mcsoftware.ticketo.theater.util.TheaterUpdater
+import jakarta.transaction.Transactional
 import org.springframework.dao.DataAccessException
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException
+import org.springframework.stereotype.Service
 import java.util.*
 
+@Service
+@Transactional(rollbackOn = [Exception::class])
 class TheaterServiceImpl(
     private val repo: TheaterRepository,
     private val convert: TheaterConverter,
+    private val updater: TheaterUpdater
     ): TheaterService {
     override fun create(request: TheaterRequest): TheaterResponse {
         try{
@@ -32,11 +38,9 @@ class TheaterServiceImpl(
         try{
             val fetchTheater:Optional<Theater> = repo.findById(id)
             if(fetchTheater.isPresent){
-                fetchTheater.get().theaterNumber = request.theaterNumber
-                fetchTheater.get().stockSeats = request.stockSeats
-                fetchTheater.get().filmId = request.filmId
-                val updatedTheater = repo.saveAndFlush(fetchTheater.get())
-                return convert.convertToResponse(updatedTheater)
+                val updatedTheater = updater.updaterTheater(fetchTheater.get(),request)
+                val savedTheater = repo.saveAndFlush(updatedTheater)
+                return convert.convertToResponse(savedTheater)
             } else {
                 throw NotFoundException()
             }
