@@ -5,21 +5,19 @@ import com.mcsoftware.ticketo.customer.model.dto.response.CustomerResponse
 import com.mcsoftware.ticketo.customer.model.entity.Customer
 import com.mcsoftware.ticketo.customer.repository.CustomerRepository
 import com.mcsoftware.ticketo.customer.service.interfaces.CustomerService
+import com.mcsoftware.ticketo.customer.util.CustomerConverter
 import org.springframework.dao.DataAccessException
 import java.util.*
 
-class CustomerServiceImpl (private val repo: CustomerRepository):CustomerService {
+class CustomerServiceImpl (
+    private val repo: CustomerRepository,
+    private val convert : CustomerConverter
+):CustomerService {
     override fun createCustomer(request: CustomerRequest): CustomerResponse {
         try {
-            val customer = Customer(UUID.randomUUID(), request.name, request.birthDate, request.email, request.address)
+            val customer = convert.convertToCustomer(request)
             val savedCustomer: Customer = repo.save(customer)
-            return CustomerResponse(
-                savedCustomer.id,
-                savedCustomer.name,
-                savedCustomer.birthDate,
-                savedCustomer.email,
-                savedCustomer.address
-            )
+            return convert.convertToResponse(savedCustomer)
         } catch (e: IllegalArgumentException) {
             throw IllegalArgumentException("Invalid input: ${e.message}")
         } catch (e: DataAccessException) {

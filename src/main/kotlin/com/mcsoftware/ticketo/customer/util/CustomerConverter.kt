@@ -5,7 +5,7 @@ import com.mcsoftware.ticketo.customer.model.dto.response.CustomerResponse
 import com.mcsoftware.ticketo.customer.model.entity.Customer
 import java.util.*
 
-class BuilderConverter {
+class CustomerConverter {
     fun convertToCustomer(request : CustomerRequest) :Customer{
         try{
             return Customer(
