@@ -1,7 +1,6 @@
 package com.mcsoftware.ticketo.customer.model.entity
 
 import jakarta.persistence.*
-import org.springframework.stereotype.Service
 
 @Entity
 @Table(name = "m_customer")
