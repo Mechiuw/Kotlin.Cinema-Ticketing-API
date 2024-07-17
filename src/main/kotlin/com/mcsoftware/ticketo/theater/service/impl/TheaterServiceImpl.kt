@@ -7,6 +7,7 @@ import com.mcsoftware.ticketo.theater.repository.TheaterRepository
 import com.mcsoftware.ticketo.theater.service.TheaterService
 import com.mcsoftware.ticketo.theater.util.TheaterConverter
 import org.springframework.dao.DataAccessException
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException
 import java.util.*
 
 class TheaterServiceImpl(
@@ -28,7 +29,24 @@ class TheaterServiceImpl(
     }
 
     override fun update(id: UUID, request: TheaterRequest): TheaterResponse {
-        TODO("Not yet implemented")
+        try{
+            val fetchTheater:Optional<Theater> = repo.findById(id)
+            if(fetchTheater.isPresent){
+                fetchTheater.get().theaterNumber = request.theaterNumber
+                fetchTheater.get().stockSeats = request.stockSeats
+                fetchTheater.get().filmId = request.filmId
+                val updatedTheater = repo.saveAndFlush(fetchTheater.get())
+                return convert.convertToResponse(updatedTheater)
+            } else {
+                throw NotFoundException()
+            }
+        }  catch (e: IllegalArgumentException) {
+            throw IllegalArgumentException("Invalid input: ${e.message}")
+        } catch (e: DataAccessException) {
+            throw IllegalAccessException("Database error: ${e.message}")
+        } catch (e: Exception) {
+            throw RuntimeException("Unexpected error: ${e.message}")
+        }
     }
 
     override fun delete(id: UUID) {

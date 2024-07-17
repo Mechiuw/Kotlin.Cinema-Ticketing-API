@@ -19,11 +19,11 @@ data class Theater(
     var theaterNumber:String,
 
     @Column(name = "stock_seats", nullable = false)
-    val stockSeats:Int,
+    var stockSeats:Int,
 
     @ManyToOne
     @JsonBackReference
     @JoinColumn(name = "film_id", referencedColumnName = "id", nullable = false)
-    val filmId:UUID,
+    var filmId:UUID,
 
 )
