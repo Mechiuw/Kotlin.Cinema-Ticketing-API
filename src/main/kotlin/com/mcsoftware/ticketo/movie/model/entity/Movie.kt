@@ -2,7 +2,7 @@ package com.mcsoftware.ticketo.movie.model.entity
 
 import com.fasterxml.jackson.annotation.JsonBackReference
 import jakarta.persistence.*
-import org.jetbrains.annotations.NotNull
+import lombok.Builder
 import java.util.*
 
 @Entity
@@ -12,7 +12,7 @@ data class Movie(
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "movie_id", columnDefinition = "uuid", updatable = false, nullable = false)
-    val id: UUID,
+    val id: String,
 
     @Column(name = "movie_title", nullable = false)
     val title: String,
@@ -29,5 +29,5 @@ data class Movie(
     @ManyToOne
     @JsonBackReference
     @JoinColumn(name = "rating_id_list", nullable = false, referencedColumnName = "id")
-    val ratingId:UUID //ganti ke rating id
+    val ratingId:String //ganti ke rating id
 )

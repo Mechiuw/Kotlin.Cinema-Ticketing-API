@@ -1,5 +1,6 @@
 package com.mcsoftware.ticketo.movie.model.dto.response
 
+import lombok.Builder
 import java.util.*
 
 data class MovieResponse(
