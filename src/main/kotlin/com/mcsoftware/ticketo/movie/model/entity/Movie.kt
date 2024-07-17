@@ -12,7 +12,7 @@ data class Movie(
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "movie_id", columnDefinition = "uuid", updatable = false, nullable = false)
-    val id: UUID,
+    val id: UUID = UUID.randomUUID(),
 
     @Column(name = "movie_title", nullable = false)
     var title: String,

@@ -6,8 +6,8 @@ import com.mcsoftware.ticketo.movie.model.dto.response.MovieResponse
 
 interface MovieService {
     fun createMovies(request : MovieRequest) :MovieResponse;
-    fun updateMovies();
-    fun deleteMovies();
-    fun getMovies();
+    fun updateMovies(id: String,request: MovieRequest);
+    fun deleteMovies(id: String);
+    fun getMovies(id: String);
     fun allMovies();
 }
