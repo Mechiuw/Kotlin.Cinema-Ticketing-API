@@ -11,6 +11,7 @@ import jakarta.transaction.Transactional
 import org.springframework.dao.DataAccessException
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException
 import org.springframework.stereotype.Service
+import java.util.*
 
 @Service
 @Transactional(rollbackOn = [Exception::class])
@@ -53,14 +54,53 @@ class CustomerServiceImpl (
     }
 
     override fun deleteCustomer(id: String) {
-        TODO("Not yet implemented")
+        try{
+            val presentCustomer = repo.findById(id).orElseThrow()
+            if(presentCustomer != null){
+                repo.delete(presentCustomer)
+            } else {
+                throw NotFoundException()
+            }
+        } catch (e: IllegalArgumentException) {
+            throw IllegalArgumentException("Invalid input: ${e.message}")
+        } catch (e: DataAccessException) {
+            throw IllegalAccessException("Database error: ${e.message}")
+        } catch (e: Exception) {
+            throw RuntimeException("Unexpected error: ${e.message}")
+        }
     }
 
     override fun getCustomer(id: String): CustomerResponse {
-        TODO("Not yet implemented")
+        try{
+            val fetchCustomer : Optional<Customer> = repo.findById(id)
+            if(fetchCustomer.isPresent){
+                return convert.convertToResponse(fetchCustomer.get())
+            } else {
+                throw NotFoundException()
+            }
+        } catch (e: IllegalArgumentException) {
+            throw IllegalArgumentException("Invalid input: ${e.message}")
+        } catch (e: DataAccessException) {
+            throw IllegalAccessException("Database error: ${e.message}")
+        } catch (e: Exception) {
+            throw RuntimeException("Unexpected error: ${e.message}")
+        }
     }
 
     override fun allCustomer(): List<Customer> {
-        TODO("Not yet implemented")
+        try{
+            val fetchCustomers : List<Customer> = repo.findAll()
+            if(fetchCustomers.isNotEmpty()){
+                return fetchCustomers;
+            } else {
+                throw  NotFoundException()
+            }
+        } catch (e: IllegalArgumentException) {
+            throw IllegalArgumentException("Invalid input: ${e.message}")
+        } catch (e: DataAccessException) {
+            throw IllegalAccessException("Database error: ${e.message}")
+        } catch (e: Exception) {
+            throw RuntimeException("Unexpected error: ${e.message}")
+        }
     }
 }
