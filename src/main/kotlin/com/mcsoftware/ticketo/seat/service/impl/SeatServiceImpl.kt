@@ -52,11 +52,29 @@ class SeatServiceImpl (
     }
 
     override fun delete(id: UUID) {
-        TODO("Not yet implemented")
+        try{
+          val fetchSeat = repo.findById(id).orElseThrow() ?: throw NotFoundException()
+            repo.delete(fetchSeat)
+        } catch (e: IllegalArgumentException) {
+            throw IllegalArgumentException("Invalid input: ${e.message}")
+        } catch (e: DataAccessException) {
+            throw IllegalAccessException("Database error: ${e.message}")
+        } catch (e: Exception) {
+            throw RuntimeException("Unexpected error: ${e.message}")
+        }
     }
 
     override fun getSeat(id: UUID): SeatResponse {
-        TODO("Not yet implemented")
+        try{
+          val fetchSeat = repo.findById(id).orElseThrow() ?: throw NotFoundException()
+          return convert.convertToResponse(fetchSeat)
+        } catch (e: IllegalArgumentException) {
+            throw IllegalArgumentException("Invalid input: ${e.message}")
+        } catch (e: DataAccessException) {
+            throw IllegalAccessException("Database error: ${e.message}")
+        } catch (e: Exception) {
+            throw RuntimeException("Unexpected error: ${e.message}")
+        }
     }
 
     override fun allSeat(): List<Seat> {
