@@ -5,18 +5,51 @@ import com.mcsoftware.ticketo.ticket.model.dto.response.TrxTicketResponse
 import com.mcsoftware.ticketo.ticket.model.entity.TrxTicket
 import com.mcsoftware.ticketo.ticket.repository.TrxTicketRepository
 import com.mcsoftware.ticketo.ticket.service.interfaces.TrxTicketService
+import com.mcsoftware.ticketo.ticket.util.TicketConverter
+import com.mcsoftware.ticketo.ticket.util.TicketUpdater
+import org.springframework.dao.DataAccessException
+import org.springframework.dao.DataIntegrityViolationException
+import org.springframework.dao.DataRetrievalFailureException
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException
 import java.util.*
 
 class TrxTicketServiceImpl(
-    private val repo : TrxTicketRepository
+    private val repo : TrxTicketRepository,
+    private val convert : TicketConverter,
+    private val updater : TicketUpdater,
 ) : TrxTicketService {
     override fun create(request: TrxTicketRequest): TrxTicketResponse {
-        TODO("Not yet implemented")
+        try {
+            val newTicket = convert.convertToTicket(request)
+            val savedTicket = repo.save(newTicket)
+            return convert.convertToResponse(savedTicket)
+        } catch (e: IllegalArgumentException) {
+            throw IllegalArgumentException("Invalid input: ${e.message}")
+        } catch (e: DataAccessException) {
+            throw IllegalAccessException("Database error: ${e.message}")
+        } catch (e: Exception) {
+            throw RuntimeException("Unexpected error: ${e.message}")
+        }
     }
 
     override fun update(id: UUID, request: TrxTicketRequest): TrxTicketResponse {
-        TODO("Not yet implemented")
+        try{
+            val fetchTicket = repo.findById(id).orElseThrow {
+                NotFoundException()
+            }
+
+                val updatedTicket = updater.ticketUpdater(fetchTicket, request)
+                val savedTicket = repo.saveAndFlush(updatedTicket)
+                return convert.convertToResponse(savedTicket)
+            } catch (e: IllegalArgumentException) {
+                throw IllegalArgumentException("Invalid input: ${e.message}")
+            } catch (e: DataAccessException) {
+                throw IllegalAccessException("Database error: ${e.message}")
+            } catch (e: Exception) {
+                throw RuntimeException("Unexpected error: ${e.message}")
+        }
     }
+
 
     override fun delete(id: UUID) {
         TODO("Not yet implemented")

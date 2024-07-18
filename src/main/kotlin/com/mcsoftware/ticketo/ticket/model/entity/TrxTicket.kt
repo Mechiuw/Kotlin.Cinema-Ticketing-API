@@ -17,8 +17,8 @@ data class TrxTicket(
     val id:UUID = UUID.randomUUID(),
 
     @Column(name = "seat_id", updatable = false, nullable = false)
-    val seatId:UUID = UUID.randomUUID(),
+    var seatId:UUID = UUID.randomUUID(),
 
     @Column(name = "customer_id", updatable = false, nullable = false)
-    val customerId:UUID = UUID.randomUUID()
+    var customerId:UUID = UUID.randomUUID()
 )
