@@ -78,6 +78,19 @@ class SeatServiceImpl (
     }
 
     override fun allSeat(): List<Seat> {
-        TODO("Not yet implemented")
+        try{
+          val seats : List<Seat> = repo.findAll()
+          if(seats.isNotEmpty()){
+              return seats
+          } else {
+              throw NotFoundException()
+          }
+        } catch (e: IllegalArgumentException) {
+            throw IllegalArgumentException("Invalid input: ${e.message}")
+        } catch (e: DataAccessException) {
+            throw IllegalAccessException("Database error: ${e.message}")
+        } catch (e: Exception) {
+            throw RuntimeException("Unexpected error: ${e.message}")
+        }
     }
 }
