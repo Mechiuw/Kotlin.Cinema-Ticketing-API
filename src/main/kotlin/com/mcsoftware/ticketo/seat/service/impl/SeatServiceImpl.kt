@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service
 @Service
 class SeatServiceImpl (
     @Autowired
-    private val repo:SeatRepository
+    private val repo:SeatRepository,
 ): SeatService {
     override fun create(request: SeatRequest): SeatResponse {
         TODO("Not yet implemented")
