@@ -52,14 +52,49 @@ class TrxTicketServiceImpl(
 
 
     override fun delete(id: UUID) {
-        TODO("Not yet implemented")
+        try{
+            val foundTicket = repo.findById(id).orElseThrow() { NotFoundException() }
+            repo.delete(foundTicket)
+        } catch (e: IllegalArgumentException) {
+            throw IllegalArgumentException("Invalid input: ${e.message}")
+        } catch (e: DataAccessException) {
+            throw IllegalAccessException("Database error: ${e.message}")
+        } catch (e: Exception) {
+            throw RuntimeException("Unexpected error: ${e.message}")
+        }
     }
 
     override fun getTicket(id: UUID): TrxTicketResponse {
-        TODO("Not yet implemented")
+        try {
+            val foundTicket = repo.findById(id).orElseThrow() { NotFoundException() }
+            if(foundTicket != null){
+                return convert.convertToResponse(foundTicket)
+            } else {
+                throw NotFoundException()
+            }
+        } catch (e: IllegalArgumentException) {
+            throw IllegalArgumentException("Invalid input: ${e.message}")
+        } catch (e: DataAccessException) {
+            throw IllegalAccessException("Database error: ${e.message}")
+        } catch (e: Exception) {
+            throw RuntimeException("Unexpected error: ${e.message}")
+        }
     }
 
     override fun allTicket(): List<TrxTicket> {
-        TODO("Not yet implemented")
+        try {
+            val foundTicket = repo.findAll()
+            if(foundTicket.isNotEmpty()){
+                return foundTicket
+            } else {
+                throw NotFoundException()
+            }
+        } catch (e: IllegalArgumentException) {
+            throw IllegalArgumentException("Invalid input: ${e.message}")
+        } catch (e: DataAccessException) {
+            throw IllegalAccessException("Database error: ${e.message}")
+        } catch (e: Exception) {
+            throw RuntimeException("Unexpected error: ${e.message}")
+        }
     }
 }
