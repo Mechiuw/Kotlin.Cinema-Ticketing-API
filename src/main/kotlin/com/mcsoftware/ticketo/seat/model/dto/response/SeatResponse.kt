@@ -11,5 +11,5 @@ data class SeatResponse(
     @field:NotBlank(message = "seat can't be responded as blank or null value")
     var seatNumber:String,
     @field:NotBlank(message = "theater_id can't be responded as blank or null value")
-    var theaterId: UUID,
+    var theaterId: String,
 )

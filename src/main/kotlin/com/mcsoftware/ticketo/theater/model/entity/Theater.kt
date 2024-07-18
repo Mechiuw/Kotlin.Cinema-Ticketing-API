@@ -1,6 +1,7 @@
 package com.mcsoftware.ticketo.theater.model.entity
 
 import com.fasterxml.jackson.annotation.JsonBackReference
+import com.mcsoftware.ticketo.movie.model.entity.Movie
 import jakarta.persistence.Column
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
@@ -24,6 +25,6 @@ data class Theater(
     @ManyToOne
     @JsonBackReference
     @JoinColumn(name = "film_id", referencedColumnName = "id", nullable = false)
-    var filmId:UUID,
+    var filmId:Movie,
 
 )

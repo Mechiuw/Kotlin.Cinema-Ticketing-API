@@ -3,17 +3,21 @@ package com.mcsoftware.ticketo.seat.util
 import com.mcsoftware.ticketo.seat.model.dto.request.SeatRequest
 import com.mcsoftware.ticketo.seat.model.dto.response.SeatResponse
 import com.mcsoftware.ticketo.seat.model.entity.Seat
+import com.mcsoftware.ticketo.theater.repository.TheaterRepository
 import org.springframework.stereotype.Component
 import java.util.*
 
 @Component
-class SeatConverter {
+class SeatConverter(
+    private val theaterRepo: TheaterRepository
+) {
     fun convertToSeat(request : SeatRequest) : Seat{
         try {
+            val foundTheater = theaterRepo.findById(request.theaterId).orElseThrow()
             return Seat(
                 UUID.randomUUID(),
                 request.seatNumber,
-                request.theaterId
+                foundTheater
             )
         }    catch (e:Exception){
             throw RuntimeException(e.message)
@@ -25,7 +29,7 @@ class SeatConverter {
             return SeatResponse(
                 entity.id,
                 entity.seatNumber,
-                entity.theaterId
+                entity.theaterId.id.toString()
             )
         } catch (e:Exception){
             throw RuntimeException(e.message)

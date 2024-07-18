@@ -1,5 +1,6 @@
 package com.mcsoftware.ticketo.seat.model.entity
 
+import com.mcsoftware.ticketo.theater.model.entity.Theater
 import jakarta.persistence.Column
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
@@ -19,5 +20,5 @@ data class Seat(
     var seatNumber: String,
 
     @Column(name = "theater_id", nullable = false)
-    var theaterId : UUID,
+    var theaterId : Theater,
 )

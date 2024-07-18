@@ -1,5 +1,7 @@
 package com.mcsoftware.ticketo.ticket.model.entity
 
+import com.mcsoftware.ticketo.customer.model.entity.Customer
+import com.mcsoftware.ticketo.seat.model.entity.Seat
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
@@ -17,8 +19,8 @@ data class TrxTicket(
     val id:UUID = UUID.randomUUID(),
 
     @Column(name = "seat_id", updatable = false, nullable = false)
-    var seatId:UUID = UUID.randomUUID(),
+    var seatId:Seat,
 
     @Column(name = "customer_id", updatable = false, nullable = false)
-    var customerId:UUID = UUID.randomUUID()
+    var customerId:Customer
 )
