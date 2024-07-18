@@ -8,8 +8,6 @@ import com.mcsoftware.ticketo.ticket.service.interfaces.TrxTicketService
 import com.mcsoftware.ticketo.ticket.util.TicketConverter
 import com.mcsoftware.ticketo.ticket.util.TicketUpdater
 import org.springframework.dao.DataAccessException
-import org.springframework.dao.DataIntegrityViolationException
-import org.springframework.dao.DataRetrievalFailureException
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException
 import java.util.*
 

@@ -1,5 +1,6 @@
 package com.mcsoftware.ticketo.movie.model.dto.request
 
+import com.mcsoftware.ticketo.rating.model.entity.Rating
 import jakarta.validation.constraints.Min
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.NotNull
@@ -22,5 +23,5 @@ data class MovieRequest(
     val price: Int,
 
     @field:NotBlank(message = "Rating ID cannot be blank")
-    val ratingId: String
+    val ratingId: Rating
 )

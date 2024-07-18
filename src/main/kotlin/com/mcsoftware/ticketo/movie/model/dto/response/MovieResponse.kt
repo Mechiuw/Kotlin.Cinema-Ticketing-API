@@ -9,5 +9,6 @@ data class MovieResponse(
     val title : String,
     val duration : Int,
     val showDate : Date,
+    val price : Int,
     val ratingId : String
 )

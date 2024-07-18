@@ -7,10 +7,16 @@ import com.mcsoftware.ticketo.movie.service.MovieService
 import org.springframework.stereotype.Service
 
 @Service
-class MovieServiceImpl (private val repo : MovieRepository) : MovieService {
+class MovieServiceImpl (
+    private val repo : MovieRepository
+) : MovieService {
 
     override fun createMovies(request: MovieRequest): MovieResponse {
-        TODO("Not yet implemented")
+        try{
+
+        } catch (e:Exception){
+            throw RuntimeException(e.message)
+        }
     }
 
     override fun updateMovies(id: String, request: MovieRequest) {
