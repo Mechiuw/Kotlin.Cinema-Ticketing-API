@@ -11,4 +11,5 @@ interface RatingService {
     fun deleteRating(id : UUID)
     fun getRating(id:UUID) : RatingResponse
     fun allRating() : List<Rating>
+    fun delAllRating()
 }

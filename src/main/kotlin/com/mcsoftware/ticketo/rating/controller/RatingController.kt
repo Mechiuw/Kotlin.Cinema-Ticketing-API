@@ -47,7 +47,7 @@ class RatingController(
         return ResponseEntity(response,HttpStatus.OK)
     }
     fun delAll():ResponseEntity<Any>{
-        val fetchService = service.delAll()
+        val fetchService = service.delAllRating()
         val json = ResponseJSON<Any>(HttpStatus.OK.value())
         val response = json.useResponse(fetchService)
         return ResponseEntity(response,HttpStatus.OK)
