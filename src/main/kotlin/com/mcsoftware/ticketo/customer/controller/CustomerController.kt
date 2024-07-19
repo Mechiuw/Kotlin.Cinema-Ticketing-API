@@ -32,4 +32,13 @@ class CustomerController(
         }.useResponse(updateService)
         return ResponseEntity(response,HttpStatus.OK)
     }
+
+    @DeleteMapping(AppEndpoint.DEL_ID)
+    fun delete(@PathVariable id:UUID):ResponseEntity<Any>{
+        val deleteService = service.deleteCustomer(id)
+        val response = json.apply {
+            statusCode = HttpStatus.OK.value()
+        }.useResponse(deleteService)
+        return ResponseEntity(response,HttpStatus.OK)
+    }
 }
