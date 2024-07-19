@@ -3,13 +3,11 @@ package com.mcsoftware.ticketo.movie.model.entity
 import com.fasterxml.jackson.annotation.JsonBackReference
 import com.mcsoftware.ticketo.rating.model.entity.Rating
 import jakarta.persistence.*
-import lombok.Builder
 import java.util.*
 
 @Entity
 @Table(name = "t_movie")
 data class Movie(
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "movie_id", columnDefinition = "uuid", updatable = false, nullable = false)
@@ -29,6 +27,6 @@ data class Movie(
 
     @ManyToOne
     @JsonBackReference
-    @JoinColumn(name = "rating_id_list", nullable = false, referencedColumnName = "id")
-    var ratingId:Rating //ganti ke rating id
+    @JoinColumn(name = "rating_id", nullable = false, referencedColumnName = "rating_id")
+    var rating: Rating
 )

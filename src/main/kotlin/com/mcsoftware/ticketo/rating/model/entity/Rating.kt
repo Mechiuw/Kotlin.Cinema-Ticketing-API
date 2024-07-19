@@ -10,7 +10,6 @@ import java.util.UUID
 @Entity
 @Table(name = "t_rating")
 data class Rating(
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "rating_id", updatable = false, nullable = false)
@@ -23,7 +22,7 @@ data class Rating(
     @Column(name = "description", nullable = false)
     var description :String,
 
-    @OneToMany(mappedBy = "id", cascade = [CascadeType.ALL])
+    @OneToMany(mappedBy = "rating", cascade = [CascadeType.ALL])
     @JsonManagedReference
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     var moviesLinked : List<Movie>
