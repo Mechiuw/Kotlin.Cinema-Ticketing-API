@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import java.util.UUID
 
 @RestController
 @RequestMapping(AppEndpoint.API_RATING)
@@ -21,13 +22,18 @@ class RatingController(
         return  ResponseEntity(response,HttpStatus.CREATED)
     }
 
-    fun update(id:String,request: RatingRequest):ResponseEntity<Any>{
+    fun update(id:UUID,request: RatingRequest):ResponseEntity<Any>{
         val updateService = service.updateRating(id,request)
         val json = ResponseJSON<Any>(HttpStatus.OK.value())
         val response = json.useResponse(updateService)
         return ResponseEntity(response,HttpStatus.OK)
     }
-    fun delete():ResponseEntity<Any>{}
+    fun delete(id:UUID):ResponseEntity<Any>{
+        val delService = service.deleteRating(id)
+        val json = ResponseJSON<Any>(HttpStatus.OK.value())
+        val response = json.useResponse(delService)
+        return ResponseEntity(response,HttpStatus.OK)
+    }
     fun getRating():ResponseEntity<Any>{}
     fun allRating():ResponseEntity<Any>{}
     fun delAll():ResponseEntity<Any>{}
