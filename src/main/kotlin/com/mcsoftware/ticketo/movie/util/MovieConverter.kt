@@ -13,7 +13,7 @@ class MovieConverter(
 ) {
     fun convertToMovie(request :MovieRequest) :Movie{
         try{
-            val fetchRating = ratingRepo.findById(request.ratingId.id).orElseThrow()
+            val fetchRating = ratingRepo.findById(request.ratingId).orElseThrow()
             return Movie(
                 UUID.randomUUID(),
                 request.title,

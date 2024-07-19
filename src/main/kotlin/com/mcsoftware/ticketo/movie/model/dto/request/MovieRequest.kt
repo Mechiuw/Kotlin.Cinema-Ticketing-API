@@ -23,5 +23,5 @@ data class MovieRequest(
     val price: Int,
 
     @field:NotBlank(message = "Rating ID cannot be blank")
-    val ratingId: Rating
+    val ratingId: UUID
 )
