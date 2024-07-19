@@ -3,7 +3,7 @@ package com.mcsoftware.ticketo.json
 import org.springframework.http.HttpStatus
 
 class ResponseJSON<T>(
-    var statusCode: Int,
+    private var statusCode: Int,
     var success: Boolean,
     var message: String,
     var data: T? = null,
@@ -14,18 +14,22 @@ class ResponseJSON<T>(
     fun useResponse(anyData: T): ResponseJSON<T> {
         return when (this.statusCode) {
             //success
-            HttpStatus.OK.value() -> ResponseJSON(HttpStatus.OK.value(), true, HttpStatus.OK.reasonPhrase, anyData)
+            HttpStatus.OK.value() -> ResponseJSON(
+                HttpStatus.OK.value(),
+                true,
+                "successfully mapped data",
+                anyData)
             HttpStatus.CREATED.value() -> ResponseJSON(
                 HttpStatus.CREATED.value(),
                 true,
-                HttpStatus.CREATED.reasonPhrase,
+                "successfully created data",
                 anyData
             )
 
             HttpStatus.ACCEPTED.value() -> ResponseJSON(
                 HttpStatus.ACCEPTED.value(),
                 true,
-                HttpStatus.ACCEPTED.reasonPhrase,
+                "successfully accepted data",
                 anyData
             )
             // errors
