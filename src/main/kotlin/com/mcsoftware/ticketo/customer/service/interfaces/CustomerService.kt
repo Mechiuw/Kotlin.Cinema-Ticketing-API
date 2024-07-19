@@ -11,4 +11,5 @@ interface CustomerService {
     fun deleteCustomer(id:UUID);
     fun getCustomer(id:UUID):CustomerResponse;
     fun allCustomer():List<Customer>;
+    fun delAllCustomer();
 }
