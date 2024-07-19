@@ -1,13 +1,9 @@
 package com.mcsoftware.ticketo.ticket.model.entity
 
+import com.fasterxml.jackson.annotation.JsonBackReference
 import com.mcsoftware.ticketo.customer.model.entity.Customer
 import com.mcsoftware.ticketo.seat.model.entity.Seat
-import jakarta.persistence.Column
-import jakarta.persistence.Entity
-import jakarta.persistence.GeneratedValue
-import jakarta.persistence.GenerationType
-import jakarta.persistence.Id
-import jakarta.persistence.Table
+import jakarta.persistence.*
 import java.util.*
 
 @Entity
@@ -18,9 +14,13 @@ data class TrxTicket(
     @Column(name = "id", updatable = false, nullable = false)
     val id:UUID = UUID.randomUUID(),
 
-    @Column(name = "seat_id", updatable = false, nullable = false)
+    @ManyToOne
+    @JsonBackReference
+    @JoinColumn(name = "seat_id", nullable = false, referencedColumnName = "id")
     var seatId:Seat,
 
-    @Column(name = "customer_id", updatable = false, nullable = false)
+    @ManyToOne
+    @JsonBackReference
+    @JoinColumn(name = "customer_id", nullable = false, referencedColumnName = "id")
     var customerId:Customer
 )

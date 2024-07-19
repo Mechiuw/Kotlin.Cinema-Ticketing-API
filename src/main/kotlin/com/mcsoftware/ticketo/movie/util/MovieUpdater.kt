@@ -19,7 +19,7 @@ class MovieUpdater(
             movie.duration = request.duration
             movie.showDate = request.showDate
             movie.price = request.price
-            movie.ratingId = existingRating
+            movie.rating = existingRating
             return movie
         } catch (e:Exception){
             throw RuntimeException(e.message)

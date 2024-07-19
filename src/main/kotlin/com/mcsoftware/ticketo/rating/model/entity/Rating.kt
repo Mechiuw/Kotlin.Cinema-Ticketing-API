@@ -12,7 +12,7 @@ import java.util.UUID
 data class Rating(
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "rating_id", updatable = false, nullable = false)
+    @Column(name = "id", updatable = false, nullable = false)
     val id :UUID = UUID.randomUUID(),
 
     @Column(name = "code", nullable = false)

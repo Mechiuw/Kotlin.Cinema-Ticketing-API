@@ -1,14 +1,13 @@
 package com.mcsoftware.ticketo.seat.model.entity
 
+import com.fasterxml.jackson.annotation.JsonBackReference
 import com.mcsoftware.ticketo.theater.model.entity.Theater
-import jakarta.persistence.Column
-import jakarta.persistence.GeneratedValue
-import jakarta.persistence.GenerationType
-import jakarta.persistence.Id
+import jakarta.persistence.*
 import lombok.Data
 import java.util.*
 
-@Data
+@Entity
+@Table(name = "t_seat")
 data class Seat(
 
     @Id
@@ -19,6 +18,8 @@ data class Seat(
     @Column(name = "seat_number", nullable = false)
     var seatNumber: String,
 
-    @Column(name = "theater_id", nullable = false)
+    @ManyToOne
+    @JsonBackReference
+    @JoinColumn(name = "theater_id", nullable = false, referencedColumnName = "id")
     var theaterId : Theater,
 )

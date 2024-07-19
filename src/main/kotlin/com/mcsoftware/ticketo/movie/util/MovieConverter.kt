@@ -35,7 +35,7 @@ class MovieConverter(
                 entity.duration,
                 entity.showDate,
                 entity.price,
-                entity.ratingId.id.toString()
+                entity.rating.id.toString()
             )
         } catch (e:Exception){
             throw Exception(e.message)

@@ -10,7 +10,7 @@ import java.util.*
 data class Movie(
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "movie_id", columnDefinition = "uuid", updatable = false, nullable = false)
+    @Column(name = "id", columnDefinition = "uuid", updatable = false, nullable = false)
     val id: UUID = UUID.randomUUID(),
 
     @Column(name = "movie_title", nullable = false)
@@ -27,6 +27,6 @@ data class Movie(
 
     @ManyToOne
     @JsonBackReference
-    @JoinColumn(name = "rating_id", nullable = false, referencedColumnName = "rating_id")
+    @JoinColumn(name = "rating_id", nullable = false, referencedColumnName = "id")
     var rating: Rating
 )
