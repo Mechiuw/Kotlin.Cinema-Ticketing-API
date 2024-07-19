@@ -21,7 +21,12 @@ class RatingController(
         return  ResponseEntity(response,HttpStatus.CREATED)
     }
 
-    fun update():ResponseEntity<Any>{}
+    fun update(id:String,request: RatingRequest):ResponseEntity<Any>{
+        val updateService = service.updateRating(id,request)
+        val json = ResponseJSON<Any>(HttpStatus.OK.value())
+        val response = json.useResponse(updateService)
+        return ResponseEntity(response,HttpStatus.OK)
+    }
     fun delete():ResponseEntity<Any>{}
     fun getRating():ResponseEntity<Any>{}
     fun allRating():ResponseEntity<Any>{}
