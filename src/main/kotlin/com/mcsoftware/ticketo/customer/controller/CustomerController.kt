@@ -52,4 +52,12 @@ class CustomerController(
         val response = json.useResponse(fetchService)
         return ResponseEntity(response,HttpStatus.OK)
     }
+
+    @DeleteMapping
+    fun delAllCustomer():ResponseEntity<Any>{
+        val delService = service.delAllCustomer()
+        val json = ResponseJSON<Any>(HttpStatus.OK.value())
+        val response = json.useResponse(delService)
+        return ResponseEntity(response,HttpStatus.OK)
+    }
 }
