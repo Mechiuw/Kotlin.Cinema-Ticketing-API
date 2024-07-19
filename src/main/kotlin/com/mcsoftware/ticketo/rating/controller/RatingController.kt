@@ -34,7 +34,22 @@ class RatingController(
         val response = json.useResponse(delService)
         return ResponseEntity(response,HttpStatus.OK)
     }
-    fun getRating():ResponseEntity<Any>{}
-    fun allRating():ResponseEntity<Any>{}
-    fun delAll():ResponseEntity<Any>{}
+    fun getRating(id:UUID):ResponseEntity<Any>{
+        val fetchService = service.getRating(id)
+        val json = ResponseJSON<Any>(HttpStatus.OK.value())
+        val response = json.useResponse(fetchService)
+        return ResponseEntity(response,HttpStatus.OK)
+    }
+    fun allRating():ResponseEntity<Any>{
+        val fetchService = service.allRating()
+        val json = ResponseJSON<Any>(HttpStatus.OK.value())
+        val response = json.useResponse(fetchService)
+        return ResponseEntity(response,HttpStatus.OK)
+    }
+    fun delAll():ResponseEntity<Any>{
+        val fetchService = service.delAll()
+        val json = ResponseJSON<Any>(HttpStatus.OK.value())
+        val response = json.useResponse(fetchService)
+        return ResponseEntity(response,HttpStatus.OK)
+    }
 }
