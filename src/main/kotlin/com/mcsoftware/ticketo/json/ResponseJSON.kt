@@ -1,12 +1,15 @@
 package com.mcsoftware.ticketo.json
 
+import lombok.Data
 import org.springframework.http.HttpStatus
+import org.springframework.stereotype.Component
 
+@Component
 data class ResponseJSON<T>(
     var statusCode : Int,
     var success : Boolean,
     var message : String,
-    var data : T,
+    var data : T? = null,
 ) {
     fun useResponse(anyData :T) :ResponseJSON<T> {
         return when(this.statusCode){
