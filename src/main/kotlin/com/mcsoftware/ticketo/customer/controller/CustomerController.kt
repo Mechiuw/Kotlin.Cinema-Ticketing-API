@@ -41,4 +41,22 @@ class CustomerController(
         }.useResponse(deleteService)
         return ResponseEntity(response,HttpStatus.OK)
     }
+
+    @GetMapping(AppEndpoint.GET_ID)
+    fun getCustomer(@PathVariable id:UUID):ResponseEntity<Any>{
+        val fetchService = service.getCustomer(id)
+        val response = json.apply {
+            statusCode = HttpStatus.OK.value()
+        }.useResponse(fetchService)
+        return ResponseEntity(response,HttpStatus.OK)
+    }
+
+    @GetMapping(AppEndpoint.GET_ID)
+    fun allCustomer():ResponseEntity<Any>{
+        val fetchService = service.allCustomer()
+        val response = json.apply {
+            statusCode = HttpStatus.OK.value()
+        }.useResponse(fetchService)
+        return ResponseEntity(response,HttpStatus.OK)
+    }
 }
