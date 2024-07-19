@@ -26,5 +26,5 @@ data class Theater(
     @JsonBackReference
     @JoinColumn(name = "film_id", referencedColumnName = "id", nullable = false)
     var filmId:Movie,
-
+    
 )
