@@ -90,10 +90,8 @@ class CustomerServiceImpl (
     override fun allCustomer(): List<Customer> {
         try{
             val fetchCustomers : List<Customer> = repo.findAll()
-            if(fetchCustomers.isNotEmpty()){
-                return fetchCustomers;
-            } else {
-                throw  NotFoundException()
+            return fetchCustomers.ifEmpty {
+                Collections.emptyList()
             }
         } catch (e: IllegalArgumentException) {
             throw IllegalArgumentException("Invalid input: ${e.message}")
