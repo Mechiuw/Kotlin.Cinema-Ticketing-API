@@ -11,4 +11,5 @@ interface SeatService {
     fun delete(id:UUID);
     fun getSeat(id:UUID):SeatResponse;
     fun allSeat():List<Seat>;
+    fun delAllSeat();
 }
