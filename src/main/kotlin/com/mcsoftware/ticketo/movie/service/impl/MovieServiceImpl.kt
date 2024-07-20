@@ -59,11 +59,17 @@ class MovieServiceImpl (
     override fun allMovies() :List<Movie>{
         try{
             val allData = repo.findAll()
-            return if(allData.isNotEmpty()){
-                allData
-            } else {
+            return allData.ifEmpty {
                 Collections.emptyList()
             }
+        } catch (e:Exception){
+            throw RuntimeException(e.message)
+        }
+    }
+
+    override fun delAllMovies() {
+        try{
+            repo.deleteAll()
         } catch (e:Exception){
             throw RuntimeException(e.message)
         }

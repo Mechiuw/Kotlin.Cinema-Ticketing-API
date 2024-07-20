@@ -89,7 +89,7 @@ class RatingServiceImpl(
             if(ratings.isNotEmpty()){
                 return ratings
             } else {
-                throw NoSuchElementException()
+                return Collections.emptyList()
             }
         } catch (e: IllegalArgumentException) {
             throw IllegalArgumentException("Invalid input: ${e.message}")

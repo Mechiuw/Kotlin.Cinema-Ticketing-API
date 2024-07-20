@@ -12,4 +12,5 @@ interface MovieService {
     fun deleteMovies(id: UUID);
     fun getMovies(id: UUID):MovieResponse;
     fun allMovies():List<Movie>;
+    fun delAllMovies();
 }
