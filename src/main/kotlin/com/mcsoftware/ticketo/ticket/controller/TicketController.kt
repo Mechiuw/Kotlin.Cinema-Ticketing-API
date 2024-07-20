@@ -7,6 +7,7 @@ import com.mcsoftware.ticketo.ticket.service.interfaces.TrxTicketService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.DeleteMapping
+import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
@@ -41,7 +42,25 @@ class TicketController(
         val response = json.useResponse(updateService)
         return ResponseEntity(response,HttpStatus.OK)
     }
-    fun getTicket(id:UUID) :ResponseEntity<Any>{}
-    fun allTicket() :ResponseEntity<Any>{}
-    fun delAllTicket() :ResponseEntity<Any>{}
+    @GetMapping(AppEndpoint.GET_ID)
+    fun getTicket(@PathVariable id:UUID) :ResponseEntity<Any>{
+        val updateService = service.getTicket(id)
+        val json = ResponseJSON<Any>(HttpStatus.OK.value())
+        val response = json.useResponse(updateService)
+        return ResponseEntity(response,HttpStatus.OK)
+    }
+    @GetMapping(AppEndpoint.GET_ALL)
+    fun allTicket() :ResponseEntity<Any>{
+        val updateService = service.allTicket()
+        val json = ResponseJSON<Any>(HttpStatus.OK.value())
+        val response = json.useResponse(updateService)
+        return ResponseEntity(response,HttpStatus.OK)
+    }
+    @DeleteMapping
+    fun delAllTicket() :ResponseEntity<Any>{
+        val updateService = service.delAllTicket()
+        val json = ResponseJSON<Any>(HttpStatus.OK.value())
+        val response = json.useResponse(updateService)
+        return ResponseEntity(response,HttpStatus.OK)
+    }
 }

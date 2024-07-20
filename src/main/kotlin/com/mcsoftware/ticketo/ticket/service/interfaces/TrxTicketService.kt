@@ -11,4 +11,5 @@ interface TrxTicketService {
     fun delete(id:UUID);
     fun getTicket(id:UUID):TrxTicketResponse;
     fun allTicket():List<TrxTicket>;
+    fun delAllTicket();
 }
