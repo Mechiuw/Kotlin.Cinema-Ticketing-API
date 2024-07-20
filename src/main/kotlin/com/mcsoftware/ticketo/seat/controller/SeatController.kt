@@ -1,8 +1,10 @@
 package com.mcsoftware.ticketo.seat.controller
 
 import com.mcsoftware.ticketo.json.AppEndpoint
+import com.mcsoftware.ticketo.json.ResponseJSON
 import com.mcsoftware.ticketo.seat.model.dto.request.SeatRequest
 import com.mcsoftware.ticketo.seat.service.SeatService
+import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
@@ -19,7 +21,12 @@ class SeatController(
     private val service : SeatService
 ) {
     @PostMapping
-    fun create(@RequestBody request:SeatRequest):ResponseEntity<Any>{}
+    fun create(@RequestBody request:SeatRequest):ResponseEntity<Any>{
+        val newSeat = service.create(request)
+        val json = ResponseJSON<Any>(HttpStatus.CREATED.value())
+        val response = json.useResponse(newSeat)
+        return ResponseEntity(response,HttpStatus.CREATED)
+    }
     @PutMapping(AppEndpoint.PUT_ID)
     fun update(@PathVariable id:String,@RequestBody request:SeatRequest):ResponseEntity<Any>{}
     @DeleteMapping(AppEndpoint.DEL_ID)
