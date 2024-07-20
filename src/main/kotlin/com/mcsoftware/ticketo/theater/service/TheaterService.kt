@@ -11,4 +11,6 @@ interface TheaterService {
     fun delete(id:UUID);
     fun getTheater(id:UUID) : TheaterResponse;
     fun allTheater() : List<Theater>;
+
+    fun delAllTheater()
 }

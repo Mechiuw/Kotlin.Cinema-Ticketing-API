@@ -103,4 +103,16 @@ class TheaterServiceImpl(
             throw RuntimeException("Unexpected error: ${e.message}")
         }
     }
+
+    override fun delAllTheater() {
+        try{
+            repo.deleteAll()
+        } catch (e: IllegalArgumentException) {
+            throw IllegalArgumentException("Invalid input: ${e.message}")
+        } catch (e: DataAccessException) {
+            throw IllegalAccessException("Database error: ${e.message}")
+        } catch (e: Exception) {
+            throw RuntimeException("Unexpected error: ${e.message}")
+        }
+    }
 }
