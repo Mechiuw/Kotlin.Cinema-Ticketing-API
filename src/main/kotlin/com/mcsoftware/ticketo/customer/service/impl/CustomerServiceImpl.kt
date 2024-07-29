@@ -3,7 +3,6 @@ package com.mcsoftware.ticketo.customer.service.impl
 import com.mcsoftware.ticketo.customer.model.dto.request.CustomerRequest
 import com.mcsoftware.ticketo.customer.model.dto.response.CustomerResponse
 import com.mcsoftware.ticketo.customer.model.entity.Customer
-import com.mcsoftware.ticketo.customer.kafka.producer.KafkaProducer
 import com.mcsoftware.ticketo.customer.repository.CustomerRepository
 import com.mcsoftware.ticketo.customer.service.interfaces.CustomerService
 import com.mcsoftware.ticketo.customer.util.CustomerConverter
@@ -20,13 +19,11 @@ class CustomerServiceImpl (
     private val repo: CustomerRepository,
     private val convert : CustomerConverter,
     private val updater : CustomerUpdater,
-    private val producer : KafkaProducer
 ):CustomerService {
     override fun createCustomer(request: CustomerRequest): CustomerResponse {
         try {
             val customer = convert.convertToCustomer(request)
             val savedCustomer: Customer = repo.save(customer)
-            producer.sendCustomerEvent("Created Customer ${savedCustomer.id}")
             return convert.convertToResponse(savedCustomer)
         } catch (e: IllegalArgumentException) {
             throw IllegalArgumentException("Invalid input: ${e.message}")

@@ -7,6 +7,7 @@ object AppEndpoint {
     const val API_SEAT = "/api/seat";
     const val API_THEATER = "/api/theater";
     const val API_TICKET = "/api/ticket";
+    const val MESSAGE = "/api/v1/messages";
 
     const val GET_ID = "/{id}";
     const val DEL_ID = "/{id}";

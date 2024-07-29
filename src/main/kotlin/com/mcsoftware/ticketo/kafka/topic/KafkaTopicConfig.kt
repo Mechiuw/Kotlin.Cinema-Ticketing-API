@@ -1,4 +1,4 @@
-package com.mcsoftware.ticketo.customer.kafka.topic
+package com.mcsoftware.ticketo.kafka.topic
 
 import org.apache.kafka.clients.admin.NewTopic
 import org.springframework.context.annotation.Bean
@@ -11,7 +11,7 @@ class KafkaTopicConfig {
     @Bean
     fun testTopic() :NewTopic {
         return TopicBuilder
-            .name("kafka topics")
+            .name("kafkats")
             .build()
     }
 }
