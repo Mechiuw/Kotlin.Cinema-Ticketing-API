@@ -5,7 +5,9 @@ import com.mcsoftware.ticketo.seat.repository.SeatRepository
 import com.mcsoftware.ticketo.ticket.model.dto.request.TrxTicketRequest
 import com.mcsoftware.ticketo.ticket.model.entity.TrxTicket
 import org.springframework.data.crossstore.ChangeSetPersister
+import org.springframework.stereotype.Component
 
+@Component
 class TicketUpdater(
     private val seatRepo : SeatRepository,
     private val customerRepo : CustomerRepository,

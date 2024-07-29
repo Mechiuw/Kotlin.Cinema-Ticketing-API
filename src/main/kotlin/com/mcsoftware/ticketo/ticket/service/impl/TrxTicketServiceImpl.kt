@@ -7,10 +7,14 @@ import com.mcsoftware.ticketo.ticket.repository.TrxTicketRepository
 import com.mcsoftware.ticketo.ticket.service.interfaces.TrxTicketService
 import com.mcsoftware.ticketo.ticket.util.TicketConverter
 import com.mcsoftware.ticketo.ticket.util.TicketUpdater
+import jakarta.transaction.Transactional
 import org.springframework.dao.DataAccessException
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException
+import org.springframework.stereotype.Service
 import java.util.*
 
+@Service
+@Transactional(rollbackOn = [Exception::class])
 class TrxTicketServiceImpl(
     private val repo : TrxTicketRepository,
     private val convert : TicketConverter,
