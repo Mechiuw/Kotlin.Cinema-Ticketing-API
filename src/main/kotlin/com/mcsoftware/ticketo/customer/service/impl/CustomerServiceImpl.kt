@@ -3,7 +3,7 @@ package com.mcsoftware.ticketo.customer.service.impl
 import com.mcsoftware.ticketo.customer.model.dto.request.CustomerRequest
 import com.mcsoftware.ticketo.customer.model.dto.response.CustomerResponse
 import com.mcsoftware.ticketo.customer.model.entity.Customer
-import com.mcsoftware.ticketo.customer.producer.KafkaProducer
+import com.mcsoftware.ticketo.customer.kafka.producer.KafkaProducer
 import com.mcsoftware.ticketo.customer.repository.CustomerRepository
 import com.mcsoftware.ticketo.customer.service.interfaces.CustomerService
 import com.mcsoftware.ticketo.customer.util.CustomerConverter
